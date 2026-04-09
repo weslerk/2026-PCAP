@@ -17,7 +17,7 @@ R = float(input())
 pi = 3.14159
 
 # Qual é a formula da area do criculo?
-AREA = (2.11 / 2) * pi * R ** 3
+AREA = pi * R ** 2 
 
 # Saida - observeo formato exato e o numero de casas decimais no enunciado
-print(f"AREA = {AREA:.2f}")
+print(f"A={AREA:.4f}")
