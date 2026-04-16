@@ -6,17 +6,18 @@ Estudante: Wesley Gustavo Dos Santos Rodrigues
 # Objetivo: 
 
 # --- ANALISE (LIAC) ---
-# Entrada: 
+# Entrada: nome (texto), salario fixo (float), total de vendas efetuadas (float)
 # Processamento: 
-# Saida:
+# Saida: exibir no formato exato "SAL" = R$ valor" com 2 casas decimais
 
 # Leitura das entradas - observe o enunciado: quantas variaveis e de qual tipo?
-N = 
-H = 
-V = 
+N = int(input())
+H = int(input())
+V = float(input())
 
-#Calcule o salario - use o 1009 como referencia de estrutura
-SAL = 
+#Calcule o salario - use o 1009 como referencia de estrutura    
+SAL = H * V
 
 # Saida - Observe o formato exato e o numero de casas no enunciado
-print()
+print(f"NUMBER = {N}")
+print(f"SALARY = U$ {SAL:.2f}")
