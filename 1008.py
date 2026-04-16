@@ -10,7 +10,7 @@ Estudante: Wesley Gustavo Dos Santos Rodrigues
 # Processamento: 
 # Saida:
 
-# Leitura das entrdas - observe o enunciado: quantas variaveis e de qual tipo?
+# Leitura das entradas - observe o enunciado: quantas variaveis e de qual tipo?
 N = 
 H = 
 V = 
