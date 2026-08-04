@@ -39,7 +39,7 @@ print("Escolha o nível de dificuldade:")
 print("1 - facil        (1 a 10, 3 chances)")
 print("2 - medio        (1 a 100, 5 chances)")
 print("3 - inpossivel   (1 a 1000, 10 chances)")
-opcao = int(input2("Digite 1, 2 ou 3: "))
+opcao = int(input("Digite 1, 2 ou 3: "))
 
 nivel = niveis[opcao - 1]
 

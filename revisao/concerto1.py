@@ -5,4 +5,4 @@ palpite = input("Digite um numero de 1 a 10: ")
 if int(palpite) == segredo:
     print("Acertou!")
 else:
-    print("Errou! segredo era", segredo)
+    print("Errou! O numero secreto era", segredo)
