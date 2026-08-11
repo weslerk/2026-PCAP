@@ -10,6 +10,7 @@
 from telas import titulo, linha
 from adivinhe import jogar_adivinhe
 from modulos import ler_opcao
+from ppt import jogar_ppt
 NOME_DO_DONO = 'WESLEY'
 OPCOES = ['0', '1']
 
@@ -25,5 +26,7 @@ while True:
         break
     elif opcao == '1':
         jogar_adivinhe()
+    elif opcao == '1':
+        jogar_ppt()
     else:
         print('Opcao Invalida! Tente Novamente.')
