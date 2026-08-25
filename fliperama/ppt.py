@@ -6,7 +6,7 @@
 # Data : 11.08.2026
 #
 
-from random import randint
+import random
 
 from telas import titulo, linha
 
@@ -37,7 +37,7 @@ def jogar_ppt():
         mostrar_jogadas()
 
         jogador = int(ler_opcao('Sua Jogada', ['0', '1', '2']))
-        computador = randint(0, 2)
+        computador = random.randint(0, 2)
 
         print('Você Jogou' + JOGADAS[jogador] + '.')
         print('Computador Jogou' + JOGADAS[computador] + '.')
@@ -48,9 +48,9 @@ def jogar_ppt():
             print('Empate! Ninguém venceu!')
         elif resultado == 'jogador':
             print('Você venceu essa rodada!')
+            pontos_jogador += 1 
         elif resultado == 'computador':
             pontos_computador += 1
-            pontos_jogador += 1
             print('Computador venceu essa rodada!')
 
         linha()
@@ -62,4 +62,3 @@ def jogar_ppt():
     else:
         titulo('YOU LOSE!')
 
-jogar_ppt()
