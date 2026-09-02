@@ -20,11 +20,11 @@ from modulos import ler_numero
 def jogar_adivinhe():
     titulo('ADIVINHE O NUMERO')
 
-    numero_secreto = randint(1, 100)
+    numero_secreto = randint(1, 10)
     tentativas = 0
 
     while True:
-        palpite = ler_numero('Seu palpite de 1 a 100', 1, 100)
+        palpite = ler_numero('Seu palpite de 1 a 10', 1, 10)
         tentativas = tentativas + 1
 
         if palpite == numero_secreto:
