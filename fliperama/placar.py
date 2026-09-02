@@ -3,10 +3,18 @@
 # Conceitos : Arquivo de texto, modo de abertura, write, close
 # ==============================================================
 
+
 from os.path import exists
 
+
 ARQUIVO = 'placar.csv'
-NOMES = ['Adivinhe o Numero', 'Pedra-Papel-Tesoura', 'Par ou Impar']
+
+NOMES = [
+    'ADIVINHE O NUMERO',
+    'PEDRA-PAPEL-TESOURA',
+    'PAR OU IMPAR',
+    'DESAFIO DA TABUADA'
+]
 
 def salvar_placar(vezes):
     arquivo = open(ARQUIVO, 'w')
