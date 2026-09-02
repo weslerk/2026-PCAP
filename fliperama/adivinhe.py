@@ -7,27 +7,32 @@
 # Conceitos:
 # ============================
 
+# ============================================================
+# ARQUIVO   : adivinhe.py (pasta fliperama)
+# Base      : jogo da Aula 16
+# ============================================================
+
 from random import randint
 from telas import titulo, linha
 from modulos import ler_numero
 
+
 def jogar_adivinhe():
-    titulo('JOGO ADIVINHE O NUMERO')
-    print('Tente adivinhar o numero que estou pensando entre 1 e 10.')
-    segredo = randint(1, 10)
+    titulo('ADIVINHE O NUMERO')
+
+    numero_secreto = randint(1, 100)
     tentativas = 0
-    acertou = False
 
-    while not acertou:
-        palpite = ler_numero('Digite seu Palpite', 1, 10)
-        tentativas += 1
+    while True:
+        palpite = ler_numero('Seu palpite de 1 a 100', 1, 100)
+        tentativas = tentativas + 1
 
-        if palpite < segredo:
-            print('O numero secreto e maior. tente novamente.')
-        elif palpite > segredo:
-            print('O numero secreto e menor Tente Novamente.')
+        if palpite == numero_secreto:
+            print('Voce acertou em ' + str(tentativas) + ' tentativas!')
+            break
+        elif palpite < numero_secreto:
+            print('O numero secreto e maior.')
         else:
-            acertou = True
-            print(f'Parabens! Voce acertou o numero secreto {segredo} em {tentativas} tentativas.')
+            print('O numero secreto e menor.')
 
-        linha()
+    linha()
