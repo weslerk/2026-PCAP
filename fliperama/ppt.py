@@ -6,20 +6,30 @@
 # Data : 11.08.2026
 #
 
-import random
+# ============================================================
+# ARQUIVO   : ppt.py (pasta fliperama)
+# Conceitos : jogo como modulo, lista como tabela de nomes,
+#             funcao com retorno e operador % para dar a volta
+# Base      : jogo da Aula 17
+# ============================================================
 
+from random import randint
 from telas import titulo, linha
-
 from modulos import ler_opcao
 
+
 JOGADAS = ['PEDRA', 'PAPEL', 'TESOURA']
+
 
 def quem_vence(jogador, computador):
     if jogador == computador:
         return 'empate'
+
     if jogador == (computador + 1) % 3:
         return 'jogador'
+
     return 'computador'
+
 
 def mostrar_jogadas():
     print('[0] Pedra')
@@ -27,8 +37,9 @@ def mostrar_jogadas():
     print('[2] Tesoura')
     linha()
 
+
 def jogar_ppt():
-    titulo('PEDRA - PAPEL - TESOURA')
+    titulo('PEDRA-PAPEL-TESOURA')
 
     pontos_jogador = 0
     pontos_computador = 0
@@ -36,29 +47,32 @@ def jogar_ppt():
     while pontos_jogador < 2 and pontos_computador < 2:
         mostrar_jogadas()
 
-        jogador = int(ler_opcao('Sua Jogada', ['0', '1', '2']))
-        computador = random.randint(0, 2)
+        jogador = int(ler_opcao('Sua jogada', ['0', '1', '2']))
+        computador = randint(0, 2)
 
-        print('Você Jogou' + JOGADAS[jogador] + '.')
-        print('Computador Jogou' + JOGADAS[computador] + '.')
+        print('Voce jogou ' + JOGADAS[jogador] + '.')
+        print('O PC jogou ' + JOGADAS[computador] + '.')
 
         resultado = quem_vence(jogador, computador)
 
         if resultado == 'empate':
-            print('Empate! Ninguém venceu!')
+            print('Empate! Ninguem pontua.')
         elif resultado == 'jogador':
-            print('Você venceu essa rodada!')
-            pontos_jogador += 1 
-        elif resultado == 'computador':
-            pontos_computador += 1
-            print('Computador venceu essa rodada!')
+            pontos_jogador = pontos_jogador + 1
+            print('Voce venceu a rodada!')
+        else:
+            pontos_computador = pontos_computador + 1
+            print('O PC venceu a rodada.')
 
-        linha()
-        print(f'placar: Jogador {pontos_jogador} X {pontos_computador} Computador') 
-        linha()
+        print(
+            'Placar: Voce '
+            + str(pontos_jogador)
+            + ' x '
+            + str(pontos_computador)
+            + ' PC'
+        )
 
     if pontos_jogador > pontos_computador:
-        titulo('YOU WIN!')
+        titulo('VOCE VENCEU A PARTIDA!')
     else:
-        titulo('YOU LOSE!')
-
+        titulo('O PC VENCEU A PARTIDA!')
