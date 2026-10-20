@@ -1,0 +1,4 @@
+prog-c/*
+!prog-c/*.c
+fliperama-c/*
+!fliprama-c/*.c
