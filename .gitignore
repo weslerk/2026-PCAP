@@ -1,4 +1,4 @@
 prog-c/*
 !prog-c/*.c
-fliperama-c/*
-!fliprama-c/*.c
+fliperama-c/fliperama
+fliperama-c/fliperama.exe
