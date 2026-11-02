@@ -74,6 +74,10 @@ int buscar(char apelidos[][TAM_APELIDO], int qtd, char procurado[]) {
 int cadastrar(char apelidos[][TAM_APELIDO], int partidas[], int qtd) {
     char novo[TAM_APELIDO];
     titulo("NOVO JOGADOR");
+    if (qtd >= CAPACIDADE) {
+        printf("Cadastro cheio: nao cabe mais ninguem.\n");
+        return qtd;
+    }
     ler_texto("Apelido (sem espacos)", novo);
     if (strchr(novo, ',') != NULL) {
         printf("O apelido nao pode conter virgula.\n");
