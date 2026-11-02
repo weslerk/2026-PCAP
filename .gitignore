@@ -4,3 +4,5 @@ fliperama-c/fliperama
 fliperama-c/fliperama.exe
 /1037
 /hello
+__pycache__/
+*.py[cod]
