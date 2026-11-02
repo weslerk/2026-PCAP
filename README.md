@@ -7,7 +7,7 @@ Exercícios e projetos de Pensamento Computacional, Algoritmos e Programação.
 | Pasta | Conteúdo |
 |---|---|
 | [beecrowd](beecrowd/) | Problemas do Beecrowd em Python, identificados pelo número. |
-| [prog-c](prog-c/) | Exercícios em C: problemas 1000, 1001, 1003 e 1004, além do exemplo `hello.c`. |
+| [prog-c](prog-c/) | Os 24 problemas da lista do Beecrowd em C, além do exemplo `hello.c`. Veja o [índice](prog-c/README.md). |
 | [aula16](aula16/) | Primeira versão do Adivinhe o Número em Python. |
 | [revisao](revisao/) | Revisão de Python e quatro exercícios de conserto. |
 | [fliperama](fliperama/) | MeuApp v2.0 em Python: jogos, cadastro e arquivos CSV. |
