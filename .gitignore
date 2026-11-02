@@ -2,3 +2,5 @@ prog-c/*
 !prog-c/*.c
 fliperama-c/fliperama
 fliperama-c/fliperama.exe
+/1037
+/hello
