@@ -2,9 +2,9 @@
  * Disciplina: 2026-PCAP
  * Projeto: MeuApp v3.0 - Fliperama em C (Aulas 28 e 29)
  * Autor: Wesley
- * LIAC: Menu com entrada validada e cadastro em dois vetores paralelos.
- * Cada apelido ocupa a mesma posicao que sua quantidade de partidas.
- * O Adivinhe usa esse cadastro, salvo ao sair e carregado ao abrir.
+ * LIAC: O menu cadastra jogadores, lista e abre o Adivinhe.
+ * Um vetor guarda os apelidos e outro guarda as partidas.
+ * O cadastro fica no arquivo ao sair e volta quando abre.
  */
 #include <stdio.h>
 #include <string.h>
@@ -26,7 +26,7 @@ void titulo(char texto[]) {
     linha();
 }
 
-/* Descarta o restante da entrada para a proxima leitura. */
+/* Limpa o que sobrou da linha digitada. */
 void limpar_entrada(void) {
     int caractere;
     while ((caractere = getchar()) != '\n' && caractere != EOF) {

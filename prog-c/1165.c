@@ -6,7 +6,7 @@ int eh_primo(int numero) {
     if (numero < 2) {
         return 0;
     }
-    /* Se ha um divisor, pelo menos um deles nao passa da raiz. */
+    /* Basta procurar divisores ate a raiz do numero. */
     for (divisor = 2; divisor <= numero / divisor; divisor++) {
         if (numero % divisor == 0) {
             return 0;
