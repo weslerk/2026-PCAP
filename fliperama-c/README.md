@@ -31,6 +31,9 @@ Se não tiver arquivo, começa vazio. Para guardar as mudanças, saia pelo 0.
 - `jogadores.csv`: apelidos e número de partidas.
 - `README.md`: explicação do trabalho.
 
+No código, `nomes` guarda os apelidos, `jogos` guarda as partidas e
+`total` conta os jogadores. A opção do menu fica em `escolha`.
+
 O cadastro tem gabriela, davi e saimon, cadastrados pelo menu.
 Os executáveis ficam fora do Git pelo `.gitignore` da raiz, linhas 3 e 4.
 Este CSV é separado do usado no Fliperama em Python.
@@ -41,8 +44,8 @@ As linhas são dos arquivos `fliperama/jogadores.py` e `fliperama-c/fliperama.c`
 
 | O que faz | Python | C | Diferença |
 |---|---|---|---|
-| Guardar jogador | Linha 39: `jogadores.append(novo)` | Linhas 90–93: `strcpy`, partidas em 0 e `return qtd + 1` | No C, preciso copiar o apelido e contar mais um jogador. |
-| Comparar apelidos | Linha 85: `jogadores[i][0] == apelido` | Linha 67: `strcmp(apelidos[i], procurado) == 0` | No C, `strcmp` compara o texto. |
+| Guardar jogador | Linha 39: `jogadores.append(novo)` | Linhas 90–93: `strcpy`, partidas em 0 e `return total + 1` | No C, preciso copiar o apelido e contar mais um jogador. |
+| Comparar apelidos | Linha 85: `jogadores[i][0] == apelido` | Linha 67: `strcmp(nomes[indice], nome_busca) == 0` | No C, `strcmp` compara o texto. |
 | Abrir para salvar | Linha 136: `open(ARQUIVO, 'w')` | Linha 135: `fopen(ARQUIVO, "w")` | No C, uso `FILE *` e confiro se o arquivo abriu. |
 
 ## O que o C me obrigou a decidir

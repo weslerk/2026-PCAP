@@ -20,149 +20,149 @@ void linha(void) {
     printf("========================================\n");
 }
 
-void titulo(char texto[]) {
+void titulo(char nome_tela[]) {
     linha();
-    printf("   %s\n", texto);
+    printf("   %s\n", nome_tela);
     linha();
 }
 
 /* Limpa o que sobrou da linha digitada. */
 void limpar_entrada(void) {
-    int caractere;
-    while ((caractere = getchar()) != '\n' && caractere != EOF) {
+    int letra;
+    while ((letra = getchar()) != '\n' && letra != EOF) {
     }
 }
 
-int ler_numero(char mensagem[], int minimo, int maximo) {
-    int numero, lidos;
-    printf("%s: ", mensagem);
-    lidos = scanf("%d", &numero);
-    while (lidos != 1 || numero < minimo || numero > maximo) {
-        if (lidos == EOF) {
+int ler_numero(char pergunta[], int menor_valor, int maior_valor) {
+    int valor, leitura;
+    printf("%s: ", pergunta);
+    leitura = scanf("%d", &valor);
+    while (leitura != 1 || valor < menor_valor || valor > maior_valor) {
+        if (leitura == EOF) {
             printf("\nEntrada encerrada.\n");
             exit(EXIT_SUCCESS);
         }
         limpar_entrada();
         printf("Opcao invalida! Tente de novo: ");
-        lidos = scanf("%d", &numero);
+        leitura = scanf("%d", &valor);
     }
     limpar_entrada();
-    return numero;
+    return valor;
 }
 
-void ler_texto(char mensagem[], char destino[]) {
-    int lidos;
-    printf("%s: ", mensagem);
-    lidos = scanf("%19s", destino); /* 19 caracteres e o '\0'. */
-    if (lidos != 1) {
+void ler_texto(char pergunta[], char resposta[]) {
+    int leitura;
+    printf("%s: ", pergunta);
+    leitura = scanf("%19s", resposta); /* 19 caracteres e o '\0'. */
+    if (leitura != 1) {
         printf("\nEntrada encerrada.\n");
         exit(EXIT_SUCCESS);
     }
     limpar_entrada();
 }
 
-int buscar(char apelidos[][TAM_APELIDO], int qtd, char procurado[]) {
-    int i;
-    for (i = 0; i < qtd; i++) {
-        if (strcmp(apelidos[i], procurado) == 0) {
-            return i;
+int buscar(char nomes[][TAM_APELIDO], int total, char nome_busca[]) {
+    int indice;
+    for (indice = 0; indice < total; indice++) {
+        if (strcmp(nomes[indice], nome_busca) == 0) {
+            return indice;
         }
     }
     return -1;
 }
 
-int cadastrar(char apelidos[][TAM_APELIDO], int partidas[], int qtd) {
-    char novo[TAM_APELIDO];
+int cadastrar(char nomes[][TAM_APELIDO], int jogos[], int total) {
+    char novo_nome[TAM_APELIDO];
     titulo("NOVO JOGADOR");
-    if (qtd >= CAPACIDADE) {
+    if (total >= CAPACIDADE) {
         printf("Cadastro cheio: nao cabe mais ninguem.\n");
-        return qtd;
+        return total;
     }
-    ler_texto("Apelido (sem espacos)", novo);
-    if (strchr(novo, ',') != NULL) {
+    ler_texto("Apelido (sem espacos)", novo_nome);
+    if (strchr(novo_nome, ',') != NULL) {
         printf("O apelido nao pode conter virgula.\n");
-        return qtd;
+        return total;
     }
-    if (buscar(apelidos, qtd, novo) != -1) {
+    if (buscar(nomes, total, novo_nome) != -1) {
         printf("Esse apelido ja esta cadastrado.\n");
-        return qtd;
+        return total;
     }
-    strcpy(apelidos[qtd], novo);
-    partidas[qtd] = 0;
-    printf("Jogador %s cadastrado.\n", novo);
-    return qtd + 1;
+    strcpy(nomes[total], novo_nome);
+    jogos[total] = 0;
+    printf("Jogador %s cadastrado.\n", novo_nome);
+    return total + 1;
 }
 
-void listar(char apelidos[][TAM_APELIDO], int partidas[], int qtd) {
-    int i;
+void listar(char nomes[][TAM_APELIDO], int jogos[], int total) {
+    int indice;
     titulo("JOGADORES CADASTRADOS");
-    if (qtd == 0) {
+    if (total == 0) {
         printf("Nenhum jogador cadastrado ainda.\n");
     }
-    for (i = 0; i < qtd; i++) {
-        printf("%s | %d partidas\n", apelidos[i], partidas[i]);
+    for (indice = 0; indice < total; indice++) {
+        printf("%s | %d partidas\n", nomes[indice], jogos[indice]);
     }
 }
 
-void jogar_adivinhe(char apelidos[][TAM_APELIDO], int partidas[], int qtd) {
-    char quem[TAM_APELIDO];
-    int pos, segredo, palpite, tentativas;
+void jogar_adivinhe(char nomes[][TAM_APELIDO], int jogos[], int total) {
+    char jogador[TAM_APELIDO];
+    int posicao, sorteado, chute, chances;
     titulo("ADIVINHE O NUMERO");
-    ler_texto("Quem vai jogar", quem);
-    pos = buscar(apelidos, qtd, quem);
-    if (pos == -1) {
+    ler_texto("Quem vai jogar", jogador);
+    posicao = buscar(nomes, total, jogador);
+    if (posicao == -1) {
         printf("Cadastre esse apelido antes de jogar.\n");
         return;
     }
-    partidas[pos] = partidas[pos] + 1;
-    segredo = rand() % 100 + 1;
+    jogos[posicao] = jogos[posicao] + 1;
+    sorteado = rand() % 100 + 1;
     printf("Pensei num numero de 1 a 100.\n");
-    palpite = ler_numero("Seu palpite", 1, 100);
-    tentativas = 1;
-    while (palpite != segredo) {
-        if (palpite < segredo) {
+    chute = ler_numero("Seu palpite", 1, 100);
+    chances = 1;
+    while (chute != sorteado) {
+        if (chute < sorteado) {
             printf("Maior!\n");
         } else {
             printf("Menor!\n");
         }
-        palpite = ler_numero("Seu palpite", 1, 100);
-        tentativas = tentativas + 1;
+        chute = ler_numero("Seu palpite", 1, 100);
+        chances = chances + 1;
     }
-    printf("Acertou em %d tentativas, %s!\n", tentativas, quem);
+    printf("Acertou em %d tentativas, %s!\n", chances, jogador);
 }
 
-void salvar(char apelidos[][TAM_APELIDO], int partidas[], int qtd) {
-    FILE *arquivo = fopen(ARQUIVO, "w");
-    int i;
-    if (arquivo == NULL) {
+void salvar(char nomes[][TAM_APELIDO], int jogos[], int total) {
+    FILE *dados = fopen(ARQUIVO, "w");
+    int indice;
+    if (dados == NULL) {
         perror("Nao foi possivel salvar o cadastro");
         exit(EXIT_FAILURE);
     }
-    for (i = 0; i < qtd; i++) {
-        if (fprintf(arquivo, "%s,%d\n", apelidos[i], partidas[i]) < 0) {
+    for (indice = 0; indice < total; indice++) {
+        if (fprintf(dados, "%s,%d\n", nomes[indice], jogos[indice]) < 0) {
             perror("Erro ao gravar o cadastro");
-            fclose(arquivo);
+            fclose(dados);
             exit(EXIT_FAILURE);
         }
     }
-    if (fclose(arquivo) != 0) {
+    if (fclose(dados) != 0) {
         perror("Erro ao fechar o cadastro");
         exit(EXIT_FAILURE);
     }
 }
 
-int carregar(char apelidos[][TAM_APELIDO], int partidas[]) {
-    FILE *arquivo = fopen(ARQUIVO, "r");
-    int qtd = 0;
-    if (arquivo == NULL) {
+int carregar(char nomes[][TAM_APELIDO], int jogos[]) {
+    FILE *dados = fopen(ARQUIVO, "r");
+    int total = 0;
+    if (dados == NULL) {
         return 0; /* Primeira execucao: cadastro vazio. */
     }
-    while (qtd < CAPACIDADE &&
-           fscanf(arquivo, "%19[^,],%d\n", apelidos[qtd], &partidas[qtd]) == 2) {
-        qtd = qtd + 1;
+    while (total < CAPACIDADE &&
+           fscanf(dados, "%19[^,],%d\n", nomes[total], &jogos[total]) == 2) {
+        total = total + 1;
     }
-    fclose(arquivo);
-    return qtd;
+    fclose(dados);
+    return total;
 }
 
 void mostrar_menu(void) {
@@ -177,25 +177,25 @@ void mostrar_menu(void) {
 }
 
 int main(void) {
-    char apelidos[CAPACIDADE][TAM_APELIDO];
-    int partidas[CAPACIDADE];
-    int qtd, opcao;
+    char nomes[CAPACIDADE][TAM_APELIDO];
+    int jogos[CAPACIDADE];
+    int total, escolha;
     srand((unsigned int)time(NULL));
-    qtd = carregar(apelidos, partidas);
+    total = carregar(nomes, jogos);
     mostrar_menu();
-    opcao = ler_numero("Sua escolha", 0, 3);
-    while (opcao != 0) {
-        if (opcao == 1) {
-            jogar_adivinhe(apelidos, partidas, qtd);
-        } else if (opcao == 2) {
-            qtd = cadastrar(apelidos, partidas, qtd);
+    escolha = ler_numero("Sua escolha", 0, 3);
+    while (escolha != 0) {
+        if (escolha == 1) {
+            jogar_adivinhe(nomes, jogos, total);
+        } else if (escolha == 2) {
+            total = cadastrar(nomes, jogos, total);
         } else {
-            listar(apelidos, partidas, qtd);
+            listar(nomes, jogos, total);
         }
         mostrar_menu();
-        opcao = ler_numero("Sua escolha", 0, 3);
+        escolha = ler_numero("Sua escolha", 0, 3);
     }
-    salvar(apelidos, partidas, qtd);
+    salvar(nomes, jogos, total);
     titulo("Ate a proxima!");
     return 0;
 }
