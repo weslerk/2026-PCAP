@@ -1,16 +1,18 @@
-/* Beecrowd 1153 - Fatorial Simples. Autor: Wesley. */
+/* 1153 - Fatorial Simples: acumulo o produto do numero ate chegar a um. */
 #include <stdio.h>
 
 int main(void) {
-    int numero, i;
-    long long fatorial = 1;
-
-    if (scanf("%d", &numero) != 1) {
+    int fator;
+    if (scanf("%d", &fator) != 1) {
         return 0;
     }
-    for (i = 2; i <= numero; i++) {
-        fatorial = fatorial * i;
+
+    unsigned long long produto = 1;
+    while (fator > 1) {
+        produto *= fator;
+        --fator;
     }
-    printf("%lld\n", fatorial);
+    printf("%llu\n", produto);
+
     return 0;
 }
