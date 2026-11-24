@@ -1,19 +1,23 @@
-/* Beecrowd 1178 - Preenchimento de Vetor III. Autor: Wesley. */
+/* 1178 - Preenchimento de Vetor III: guardo o termo atual antes de reduzi-lo. */
 #include <stdio.h>
-#define TAMANHO 100
+
+enum { TERMOS = 100 };
 
 int main(void) {
-    double n[TAMANHO];
-    int i;
-
-    if (scanf("%lf", &n[0]) != 1) {
+    double termo;
+    if (scanf("%lf", &termo) != 1) {
         return 0;
     }
-    for (i = 1; i < TAMANHO; i++) {
-        n[i] = n[i - 1] / 2.0;
+
+    double sequencia[TERMOS];
+    for (int posicao = 0; posicao < TERMOS; ++posicao) {
+        sequencia[posicao] = termo;
+        termo *= 0.5;
     }
-    for (i = 0; i < TAMANHO; i++) {
-        printf("N[%d] = %.4f\n", i, n[i]);
+
+    for (int posicao = 0; posicao < TERMOS; ++posicao) {
+        printf("N[%d] = %.4f\n", posicao, sequencia[posicao]);
     }
+
     return 0;
 }
