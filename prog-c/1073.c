@@ -1,14 +1,17 @@
-/* Beecrowd 1073 - Quadrado de Pares. Autor: Wesley. */
+/* 1073 - Quadrado de Pares: conto quantos pares cabem e monto cada um. */
 #include <stdio.h>
 
 int main(void) {
-    int limite, i;
-
-    if (scanf("%d", &limite) != 1) {
+    int teto;
+    if (scanf("%d", &teto) != 1) {
         return 0;
     }
-    for (i = 2; i <= limite; i = i + 2) {
-        printf("%d^2 = %d\n", i, i * i);
+
+    int quantidade = teto / 2;
+    for (int posicao = 1; posicao <= quantidade; ++posicao) {
+        long long par = 2LL * posicao;
+        printf("%lld^2 = %lld\n", par, par * par);
     }
+
     return 0;
 }
