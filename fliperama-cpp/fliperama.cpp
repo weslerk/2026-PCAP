@@ -79,6 +79,10 @@ void cadastrar(vector<string> &apelidos, vector<int> &partidas) {
     if (!ler_apelido("Apelido (sem espacos)", novo)) {
         return;
     }
+    if (buscar(apelidos, novo) != -1) {
+        cout << "Esse apelido ja esta cadastrado.\n";
+        return;
+    }
     apelidos.push_back(novo);
     partidas.push_back(0);
     cout << "Jogador " << novo << " cadastrado.\n";
@@ -171,7 +175,8 @@ bool carregar(vector<string> &apelidos, vector<int> &partidas) {
         int total_partidas;
         char sobra;
         if (getline(linha_csv, apelido, ',') && apelido_valido(apelido) &&
-            linha_csv >> total_partidas && total_partidas >= 0 && !(linha_csv >> sobra)) {
+            linha_csv >> total_partidas && total_partidas >= 0 && !(linha_csv >> sobra) &&
+            buscar(apelidos, apelido) == -1) {
             apelidos.push_back(apelido);
             partidas.push_back(total_partidas);
         }
