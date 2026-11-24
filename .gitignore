@@ -9,3 +9,5 @@ __pycache__/
 !prog-c/README.md
 prog-cpp/*
 !prog-cpp/*.cpp
+fliperama-cpp/fliperama
+fliperama-cpp/fliperama.exe
