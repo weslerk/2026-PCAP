@@ -1,22 +1,19 @@
-/* Beecrowd 1175 - Troca em Vetor I. Autor: Wesley. */
+/* 1175 - Troca em Vetor I: guardo a entrada do ultimo indice ao primeiro. */
 #include <stdio.h>
-#define TAMANHO 20
+
+enum { TAMANHO = 20 };
 
 int main(void) {
-    int n[TAMANHO], i, auxiliar;
-
-    for (i = 0; i < TAMANHO; i++) {
-        if (scanf("%d", &n[i]) != 1) {
+    int invertidos[TAMANHO];
+    for (int destino = TAMANHO - 1; destino >= 0; --destino) {
+        if (scanf("%d", &invertidos[destino]) != 1) {
             return 0;
         }
     }
-    for (i = 0; i < TAMANHO / 2; i++) {
-        auxiliar = n[i];
-        n[i] = n[TAMANHO - 1 - i];
-        n[TAMANHO - 1 - i] = auxiliar;
+
+    for (int indice = 0; indice < TAMANHO; ++indice) {
+        printf("N[%d] = %d\n", indice, invertidos[indice]);
     }
-    for (i = 0; i < TAMANHO; i++) {
-        printf("N[%d] = %d\n", i, n[i]);
-    }
+
     return 0;
 }
