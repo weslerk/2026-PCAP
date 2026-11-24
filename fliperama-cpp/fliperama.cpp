@@ -4,8 +4,12 @@
  * Autor: Wesley
  * LIAC: O menu le uma opcao e usa dois vectors para guardar os jogadores.
  * Um vector tem os apelidos, e o outro tem as partidas na mesma ordem.
+ * O Adivinhe so conta a partida do jogador que termina o jogo.
  */
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
+#include <limits>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -51,6 +55,16 @@ bool ler_apelido(const string &pergunta, string &apelido) {
     return true;
 }
 
+int buscar(const vector<string> &apelidos, const string &procurado) {
+    int qtd = static_cast<int>(apelidos.size());
+    for (int i = 0; i < qtd; i++) {
+        if (apelidos[i] == procurado) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 void cadastrar(vector<string> &apelidos, vector<int> &partidas) {
     titulo("NOVO JOGADOR");
     string novo;
@@ -73,6 +87,38 @@ void listar(const vector<string> &apelidos, const vector<int> &partidas) {
     }
 }
 
+void jogar_adivinhe(const vector<string> &apelidos, vector<int> &partidas) {
+    titulo("ADIVINHE O NUMERO");
+    string jogador;
+    if (!ler_apelido("Quem vai jogar", jogador)) {
+        return;
+    }
+    int posicao = buscar(apelidos, jogador);
+    if (posicao == -1) {
+        cout << "Cadastre esse apelido antes de jogar.\n";
+        return;
+    }
+
+    int sorteado = rand() % 100 + 1;
+    int tentativas = 0;
+    cout << "Pensei num numero de 1 a 100.\n";
+    while (true) {
+        int palpite = ler_numero("Seu palpite", 1, 100);
+        if (palpite == -1) {
+            return;
+        }
+        tentativas++;
+        if (palpite == sorteado) {
+            break;
+        }
+        cout << (palpite < sorteado ? "Maior!\n" : "Menor!\n");
+    }
+    if (partidas[posicao] < numeric_limits<int>::max()) {
+        partidas[posicao]++;
+    }
+    cout << "Acertou em " << tentativas << " tentativas, " << jogador << "!\n";
+}
+
 void mostrar_menu() {
     titulo("FLIPERAMA DO " DONO);
     cout << "[1] Adivinhe o Numero\n";
@@ -83,6 +129,7 @@ void mostrar_menu() {
 }
 
 int main() {
+    srand(static_cast<unsigned int>(time(nullptr)));
     vector<string> apelidos;
     vector<int> partidas;
     while (true) {
@@ -92,7 +139,7 @@ int main() {
             break;
         }
         if (escolha == 1) {
-            cout << "Adivinhe o Numero\n";
+            jogar_adivinhe(apelidos, partidas);
         } else if (escolha == 2) {
             cadastrar(apelidos, partidas);
         } else {
