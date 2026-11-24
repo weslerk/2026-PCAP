@@ -1,15 +1,18 @@
-/* Beecrowd 1113 - Crescente e Decrescente. Autor: Wesley. */
+/* 1113 - Crescente e Decrescente: o primeiro par igual encerra a leitura. */
 #include <stdio.h>
 
 int main(void) {
-    int x, y;
-
-    while (scanf("%d %d", &x, &y) == 2 && x != y) {
-        if (x < y) {
-            printf("Crescente\n");
-        } else {
-            printf("Decrescente\n");
+    for (;;) {
+        int primeiro, segundo;
+        if (scanf("%d %d", &primeiro, &segundo) != 2) {
+            break;
         }
+        if (primeiro == segundo) {
+            break;
+        }
+
+        puts(primeiro > segundo ? "Decrescente" : "Crescente");
     }
+
     return 0;
 }
