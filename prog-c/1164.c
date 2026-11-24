@@ -1,37 +1,42 @@
-/* Beecrowd 1164 - Numero Perfeito. Autor: Wesley. */
+/* 1164 - Numero Perfeito: calculo a soma dos divisores pela fatoracao. */
 #include <stdio.h>
 
-int eh_perfeito(int numero) {
-    int soma = 1, divisor, outro;
-    if (numero <= 1) {
-        return 0;
-    }
-    for (divisor = 2; divisor <= numero / divisor; divisor++) {
-        if (numero % divisor == 0) {
-            outro = numero / divisor;
-            soma = soma + divisor;
-            if (outro != divisor) {
-                soma = soma + outro;
-            }
+static long long soma_dos_divisores(int restante) {
+    long long soma = 1;
+
+    for (int fator = 2; fator <= restante / fator; ++fator) {
+        long long potencia = 1;
+        long long soma_das_potencias = 1;
+        while (restante % fator == 0) {
+            restante /= fator;
+            potencia *= fator;
+            soma_das_potencias += potencia;
         }
+        soma *= soma_das_potencias;
     }
-    return soma == numero;
+
+    if (restante > 1) {
+        soma *= 1LL + restante;
+    }
+    return soma;
 }
 
 int main(void) {
-    int casos, numero, i;
-    if (scanf("%d", &casos) != 1) {
+    int quantidade;
+    if (scanf("%d", &quantidade) != 1) {
         return 0;
     }
-    for (i = 0; i < casos; i++) {
+
+    for (int caso = 0; caso < quantidade; ++caso) {
+        int numero;
         if (scanf("%d", &numero) != 1) {
-            return 0;
+            break;
         }
-        if (eh_perfeito(numero)) {
-            printf("%d eh perfeito\n", numero);
-        } else {
-            printf("%d nao eh perfeito\n", numero);
-        }
+
+        /* O proprio numero entra na soma, por isso comparo com o dobro. */
+        int perfeito = numero > 1 && soma_dos_divisores(numero) == 2LL * numero;
+        printf("%d %seh perfeito\n", numero, perfeito ? "" : "nao ");
     }
+
     return 0;
 }
