@@ -5,9 +5,12 @@
  * LIAC: O menu le uma opcao e usa dois vectors para guardar os jogadores.
  * Um vector tem os apelidos, e o outro tem as partidas na mesma ordem.
  * O Adivinhe so conta a partida do jogador que termina o jogo.
+ * O CSV guarda um apelido e seu numero de partidas por linha.
  */
 #include <cstdlib>
 #include <ctime>
+#include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <limits>
 #include <sstream>
@@ -16,6 +19,7 @@
 using namespace std;
 
 #define DONO "Wesley"
+#define ARQUIVO "jogadores.csv"
 
 void linha() {
     cout << "========================================\n";
@@ -43,12 +47,16 @@ int ler_numero(const string &pergunta, int menor, int maior) {
     return -1;
 }
 
+bool apelido_valido(const string &apelido) {
+    return !apelido.empty() && apelido.find_first_of(" \t\r\n\v\f,") == string::npos;
+}
+
 bool ler_apelido(const string &pergunta, string &apelido) {
     cout << pergunta << ": ";
     if (!getline(cin, apelido)) {
         return false;
     }
-    if (apelido.empty() || apelido.find_first_of(" \t\r\n\v\f,") != string::npos) {
+    if (!apelido_valido(apelido)) {
         cout << "O apelido nao pode conter espacos ou virgula nem ficar vazio.\n";
         return false;
     }
@@ -119,6 +127,62 @@ void jogar_adivinhe(const vector<string> &apelidos, vector<int> &partidas) {
     cout << "Acertou em " << tentativas << " tentativas, " << jogador << "!\n";
 }
 
+bool salvar(const vector<string> &apelidos, const vector<int> &partidas) {
+    const string temporario = string(ARQUIVO) + ".tmp";
+    ofstream dados(temporario);
+    if (!dados) {
+        cerr << "Nao foi possivel abrir o arquivo para salvar o cadastro.\n";
+        return false;
+    }
+
+    int qtd = static_cast<int>(apelidos.size());
+    for (int i = 0; i < qtd; i++) {
+        dados << apelidos[i] << ',' << partidas[i] << '\n';
+    }
+    dados.close();
+
+    error_code erro;
+    if (dados) {
+        filesystem::rename(temporario, ARQUIVO, erro);
+        if (!erro) {
+            return true;
+        }
+    }
+    filesystem::remove(temporario, erro);
+    cerr << "Nao foi possivel salvar o cadastro.\n";
+    return false;
+}
+
+bool carregar(vector<string> &apelidos, vector<int> &partidas) {
+    ifstream dados(ARQUIVO);
+    if (!dados) {
+        error_code erro;
+        if (!filesystem::exists(ARQUIVO, erro) && !erro) {
+            return true;
+        }
+        cerr << "Nao foi possivel abrir o cadastro.\n";
+        return false;
+    }
+
+    string registro;
+    while (getline(dados, registro)) {
+        istringstream linha_csv(registro);
+        string apelido;
+        int total_partidas;
+        char sobra;
+        if (getline(linha_csv, apelido, ',') && apelido_valido(apelido) &&
+            linha_csv >> total_partidas && total_partidas >= 0 && !(linha_csv >> sobra)) {
+            apelidos.push_back(apelido);
+            partidas.push_back(total_partidas);
+        }
+    }
+    if (!dados.eof() || dados.bad()) {
+        cerr << "Nao foi possivel ler o cadastro completo.\n";
+        return false;
+    }
+    return true;
+}
+
 void mostrar_menu() {
     titulo("FLIPERAMA DO " DONO);
     cout << "[1] Adivinhe o Numero\n";
@@ -132,6 +196,9 @@ int main() {
     srand(static_cast<unsigned int>(time(nullptr)));
     vector<string> apelidos;
     vector<int> partidas;
+    if (!carregar(apelidos, partidas)) {
+        return EXIT_FAILURE;
+    }
     while (true) {
         mostrar_menu();
         int escolha = ler_numero("Sua escolha", 0, 3);
@@ -145,6 +212,9 @@ int main() {
         } else {
             listar(apelidos, partidas);
         }
+    }
+    if (!salvar(apelidos, partidas)) {
+        return EXIT_FAILURE;
     }
     titulo("Ate a proxima!");
 }
