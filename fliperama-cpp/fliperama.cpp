@@ -99,6 +99,30 @@ void listar(const vector<string> &apelidos, const vector<int> &partidas) {
     }
 }
 
+void excluir(vector<string> &apelidos, vector<int> &partidas) {
+    titulo("EXCLUIR JOGADOR");
+    string apelido;
+    if (!ler_apelido("Apelido a excluir", apelido)) {
+        return;
+    }
+
+    int posicao = buscar(apelidos, apelido);
+    if (posicao == -1) {
+        cout << "Jogador nao encontrado.\n";
+        return;
+    }
+
+    if (ler_numero("Excluir " + apelido + " (1 confirma, 0 cancela)", 0, 1) != 1) {
+        cout << "Exclusao cancelada.\n";
+        return;
+    }
+
+    // Os elementos seguintes mudam de posicao nos dois vectors.
+    apelidos.erase(apelidos.begin() + posicao);
+    partidas.erase(partidas.begin() + posicao);
+    cout << "Jogador " << apelido << " excluido.\n";
+}
+
 void jogar_adivinhe(const vector<string> &apelidos, vector<int> &partidas) {
     titulo("ADIVINHE O NUMERO");
     string jogador;
@@ -193,6 +217,7 @@ void mostrar_menu() {
     cout << "[1] Adivinhe o Numero\n";
     cout << "[2] Cadastrar jogador\n";
     cout << "[3] Listar jogadores\n";
+    cout << "[4] Excluir jogador\n";
     cout << "[0] Sair\n";
     linha();
 }
@@ -206,7 +231,7 @@ int main() {
     }
     while (true) {
         mostrar_menu();
-        int escolha = ler_numero("Sua escolha", 0, 3);
+        int escolha = ler_numero("Sua escolha", 0, 4);
         if (escolha <= 0) {
             break;
         }
@@ -214,8 +239,10 @@ int main() {
             jogar_adivinhe(apelidos, partidas);
         } else if (escolha == 2) {
             cadastrar(apelidos, partidas);
-        } else {
+        } else if (escolha == 3) {
             listar(apelidos, partidas);
+        } else {
+            excluir(apelidos, partidas);
         }
     }
     if (!salvar(apelidos, partidas)) {
