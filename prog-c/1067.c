@@ -1,14 +1,17 @@
-/* Beecrowd 1067 - Numeros Impares. Autor: Wesley. */
+/* 1067 - Numeros Impares: uso o resto da divisao por dois como filtro. */
 #include <stdio.h>
 
 int main(void) {
-    int limite, i;
-
-    if (scanf("%d", &limite) != 1) {
+    int fim;
+    if (scanf("%d", &fim) != 1) {
         return 0;
     }
-    for (i = 1; i <= limite; i = i + 2) {
-        printf("%d\n", i);
+
+    for (long long valor = 1; valor <= fim; ++valor) {
+        if (valor % 2 != 0) {
+            printf("%lld\n", valor);
+        }
     }
+
     return 0;
 }
