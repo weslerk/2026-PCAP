@@ -12,3 +12,4 @@ prog-cpp/*
 fliperama-cpp/fliperama
 fliperama-cpp/fliperama.exe
 fliperama-cpp/jogadores.csv.tmp
+*.class
