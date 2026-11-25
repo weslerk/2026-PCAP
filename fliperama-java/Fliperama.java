@@ -4,8 +4,10 @@
  * Autor: Wesley
  * LIAC: Leio a opcao do menu como uma linha e confiro se ela vale de 0 a 3.
  * Cada ficha da lista guarda o apelido e a quantidade de partidas juntas.
+ * O jogo busca a ficha pelo texto do apelido e so conta a partida no acerto.
  */
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 class Jogador {
@@ -91,8 +93,50 @@ public class Fliperama {
         }
     }
 
+    static Jogador buscar(ArrayList<Jogador> cadastro, String procurado) {
+        for (Jogador ficha : cadastro) {
+            if (ficha.apelido.equals(procurado)) {
+                return ficha;
+            }
+        }
+        return null;
+    }
+
+    static void jogarAdivinhe(Scanner teclado, ArrayList<Jogador> cadastro, Random sorteador) {
+        titulo("ADIVINHE O NUMERO");
+        String apelido = lerApelido(teclado, "Quem vai jogar");
+        if (apelido.isEmpty()) {
+            return;
+        }
+
+        Jogador ficha = buscar(cadastro, apelido);
+        if (ficha == null) {
+            System.out.println("Cadastre esse apelido antes de jogar.");
+            return;
+        }
+
+        int segredo = sorteador.nextInt(100) + 1;
+        int tentativas = 0;
+        System.out.println("Pensei num numero de 1 a 100.");
+        while (true) {
+            int palpite = lerNumero(teclado, "Seu palpite", 1, 100);
+            if (palpite == -1) {
+                return;
+            }
+            tentativas++;
+
+            if (palpite == segredo) {
+                ficha.partidas++;
+                System.out.println("Acertou em " + tentativas + " tentativa(s), " + ficha.apelido + "!");
+                return;
+            }
+            System.out.println(palpite < segredo ? "Maior!" : "Menor!");
+        }
+    }
+
     public static void main(String[] args) {
         ArrayList<Jogador> cadastro = new ArrayList<>();
+        Random sorteador = new Random();
         try (Scanner teclado = new Scanner(System.in)) {
             while (true) {
                 mostrarMenu();
@@ -103,7 +147,7 @@ public class Fliperama {
 
                 switch (opcao) {
                     case 1:
-                        titulo("ADIVINHE O NUMERO");
+                        jogarAdivinhe(teclado, cadastro, sorteador);
                         break;
                     case 2:
                         cadastrar(teclado, cadastro);
