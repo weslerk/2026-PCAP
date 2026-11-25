@@ -3,8 +3,20 @@
  * Projeto: MeuApp v5.0 - Fliperama em Java, Aula 33
  * Autor: Wesley
  * LIAC: Leio a opcao do menu como uma linha e confiro se ela vale de 0 a 3.
+ * Cada ficha da lista guarda o apelido e a quantidade de partidas juntas.
  */
+import java.util.ArrayList;
 import java.util.Scanner;
+
+class Jogador {
+    final String apelido;
+    int partidas;
+
+    Jogador(String apelido) {
+        this.apelido = apelido;
+        this.partidas = 0;
+    }
+}
 
 public class Fliperama {
     static final String DONO = "Wesley";
@@ -42,7 +54,45 @@ public class Fliperama {
         System.out.println("[0] Sair");
     }
 
+    static String lerApelido(Scanner teclado, String pergunta) {
+        System.out.print(pergunta + ": ");
+        if (!teclado.hasNextLine()) {
+            return "";
+        }
+
+        String apelido = teclado.nextLine().trim();
+        if (apelido.isEmpty() || apelido.contains(" ") || apelido.contains("\t") || apelido.contains(",")) {
+            System.out.println("Digite um apelido sem espacos nem virgula.");
+            return "";
+        }
+        return apelido;
+    }
+
+    static void cadastrar(Scanner teclado, ArrayList<Jogador> cadastro) {
+        titulo("NOVO JOGADOR");
+        String apelido = lerApelido(teclado, "Apelido");
+        if (apelido.isEmpty()) {
+            return;
+        }
+
+        cadastro.add(new Jogador(apelido));
+        System.out.println("Jogador " + apelido + " cadastrado.");
+    }
+
+    static void listar(ArrayList<Jogador> cadastro) {
+        titulo("JOGADORES CADASTRADOS");
+        if (cadastro.isEmpty()) {
+            System.out.println("Nenhum jogador cadastrado ainda.");
+            return;
+        }
+
+        for (Jogador ficha : cadastro) {
+            System.out.println(ficha.apelido + " | " + ficha.partidas + " partidas");
+        }
+    }
+
     public static void main(String[] args) {
+        ArrayList<Jogador> cadastro = new ArrayList<>();
         try (Scanner teclado = new Scanner(System.in)) {
             while (true) {
                 mostrarMenu();
@@ -56,10 +106,10 @@ public class Fliperama {
                         titulo("ADIVINHE O NUMERO");
                         break;
                     case 2:
-                        titulo("NOVO JOGADOR");
+                        cadastrar(teclado, cadastro);
                         break;
                     case 3:
-                        titulo("JOGADORES CADASTRADOS");
+                        listar(cadastro);
                         break;
                 }
             }
